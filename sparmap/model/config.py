@@ -7,7 +7,6 @@ from typing import Any, Optional, Union
 
 @dataclass
 class SpaRMAP_Config:
-    """Configuration for the formal sample-wise ARM-REP -> SpaRMap pipeline."""
 
     # ARM-REP input and training.
     rep_gpu: str = "0"

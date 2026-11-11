@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-"""SpaRMap 通过 full-ST-universe matched-null anchor 定义输入 gene program 的整体方向，在输入 gene set 内发现 program-guided signed active modules，并直接根据模块原始得分归一化 module bank，最后仅使用 active-module genes 进行空间投影。"""
 
 import hashlib
 import logging
