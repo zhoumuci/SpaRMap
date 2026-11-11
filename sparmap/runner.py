@@ -132,28 +132,7 @@ def sparmap(
     signed_mcap_module_overlap_jaccard: float = 0.80,
     large_effect: bool = False,
 ) -> ad.AnnData:
-    """Run REP and MAP and return the final mapped AnnData.
-
-    The input must contain raw counts in ``layers['counts']`` and spatial
-    coordinates in ``obsm['spatial']``. Other scientific settings retain their
-    internal defaults, including seed=42 and device='0' (CPU fallback as before).
-
-    ``single`` trains REP independently for each sample. ``multi`` uses shared
-    PCA/Harmony and one shared REP model; graphs and MAP remain sample-local.
-    ``harmony_batch_col=None`` uses ``sample_col`` for Harmony in multi mode.
-
-    ``rep_graph_k`` controls the base spatial KNN graph; ``arm_refine_topk``
-    controls the number of retained microdomain neighbors. ``signed_mcap_rho_min``
-    is the module-graph correlation threshold in [0, 1]. Modules with Jaccard
-    overlap greater than ``signed_mcap_module_overlap_jaccard`` are redundant.
-    ``large_effect`` selects the existing memory-efficient MAP implementation.
-
-    Outputs are ``outdir/rep/adata_rep.h5ad`` and ``outdir/map/adata_map.h5ad``,
-    with MAP tables alongside the latter. An existing final REP at that path is
-    reused after structural, execution-mode and spot-alignment checks. Input and
-    parameter compatibility remain the caller's responsibility; remove that REP
-    or use another outdir to retrain. No hashes or parameter fingerprints are used.
-    """
+    """Run REP and MAP and return the final mapped AnnData."""
     _validate_parameters(mode, sample_col, harmony_batch_col, rep_graph_k, arm_refine_topk,
                          signed_mcap_rho_min, signed_mcap_module_overlap_jaccard)
     raw_path = Path(raw_h5ad).expanduser().resolve()
