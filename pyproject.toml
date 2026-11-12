@@ -3,8 +3,8 @@ requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sparmap"
-version = "0.1.0"
+name = "sparmap-st"
+version = "1.0"
 description = "Spatial representation learning and gene-set mapping for spatial transcriptomics"
 readme = "README.md"
 requires-python = ">=3.9"
