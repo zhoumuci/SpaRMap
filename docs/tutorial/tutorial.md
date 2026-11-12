@@ -2,10 +2,6 @@
 
 Yao Zhou, Chao Song, YiChen Gao, LiYuan Liu, Kewei Wang, Qiuyu Wang\*, Chunquan Li\*
 
-This tutorial maps a 399-gene TCGA-BRCA unfavorable prognostic gene set onto the
-BRCA spatial transcriptomics sample BAS1 using SpaRMap. The final section
-demonstrates joint analysis of four DLPFC tissue sections.
-
 ## Outline
 
 1. [Installation](#1-installation)
