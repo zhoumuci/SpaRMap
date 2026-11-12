@@ -461,7 +461,7 @@ def _weighted_mlre_score(
     out = np.zeros((local.shape[0],), dtype=np.float64)
     if denom <= float(eps):
         return out.astype(np.float32, copy=False)
-    # This only skips exact zero continuous weights for sparse computation; it is not TopK selection.
+    # Restrict the matrix product to genes with positive weights.
     active = np.where(w > 0.0)[0].astype(np.int64, copy=False)
     if active.size == 0:
         return out.astype(np.float32, copy=False)
@@ -569,7 +569,6 @@ def _matched_weight_permutation_pvalues(
         "seed": int(seed),
         "chunk_size": int(perm_chunk),
         "eps": float(eps),
-        "no_topk": True,
         "continuous_weights": True,
         "observed_summary": _summary_stats(obs),
         "null_mean_summary": _summary_stats(null_mean),
@@ -705,7 +704,6 @@ def _matched_weight_permutation_pvalues_large(
         "seed": int(seed),
         "chunk_size": int(perm_chunk),
         "eps": float(eps),
-        "no_topk": True,
         "continuous_weights": True,
         "observed_summary": _summary_stats(obs),
         "null_mean_summary": _summary_stats(null_mean),

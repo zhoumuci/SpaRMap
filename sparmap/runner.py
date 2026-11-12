@@ -1,4 +1,4 @@
-"""Public Python and command-line entry points; numerical work stays in model/."""
+"""SpaRMap Python and command-line entry points."""
 
 from __future__ import annotations
 
@@ -71,7 +71,7 @@ def _validate_input(raw: ad.AnnData, cfg: SpaRMAP_Config, mode: str) -> None:
 
 
 def _validate_rep(rep: ad.AnnData, raw: ad.AnnData, cfg: SpaRMAP_Config, mode: str) -> None:
-    """Check REP structure and spot alignment without data or parameter fingerprints."""
+    """Validate REP metadata, embeddings, graphs and spot alignment."""
     if not isinstance(rep.uns.get("st_rep"), dict):
         raise ValueError("Saved REP is missing uns['st_rep'] metadata.")
     if not isinstance(rep.uns.get("microdomain_rep"), dict):
@@ -162,7 +162,7 @@ def sparmap(
         _validate_input(raw, cfg, mode)
         raw.obs[SPARMAP_INPUT_ROWID_KEY] = np.arange(raw.n_obs, dtype=np.int64)
         if rep_path.is_file():
-            logger.info("Reuse final REP after structure/alignment checks: %s", rep_path)
+            logger.info("Reusing REP: %s", rep_path)
             saved_rep = ad.read_h5ad(rep_path)
             _validate_rep(saved_rep, raw, cfg, mode)
             adata_input, summary = _build_map_input_from_raw_and_rep(raw, saved_rep, cfg)
@@ -183,7 +183,6 @@ def sparmap(
         if large_effect:
             del raw
             gc.collect()
-            logger.info("large_effect=True; released raw AnnData before MAP execution")
         result = run_single_map(adata_input, cfg=cfg, output_dir=map_dir,
                                 large_effect=large_effect)
         result.uns.setdefault("single_map", {}).setdefault("run_single_input", {}).update(summary)
@@ -200,35 +199,32 @@ def sparmap(
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Run SpaRMap REP and MAP from raw counts; expose only the 11 public parameters.",
+        description="Spatial representation learning and gene-set mapping from raw counts.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-        epilog=("Fixed input: layers['counts'] and obsm['spatial']. Seed=42; device='0' with "
-                "the existing CPU fallback. Outputs: OUTDIR/rep/adata_rep.h5ad and "
-                "OUTDIR/map/adata_map.h5ad plus MAP tables. An existing final REP is reused "
-                "after basic structure/alignment checks; remove it or choose another OUTDIR "
-                "to retrain. No input, code or parameter hashes are checked."),
+        epilog=("Outputs: OUTDIR/rep/adata_rep.h5ad, OUTDIR/map/adata_map.h5ad "
+                "and MAP result tables."),
     )
     inputs = parser.add_argument_group("Input and output")
     inputs.add_argument("--raw-h5ad", required=True, metavar="PATH",
                         help="Input H5AD containing raw counts in layers['counts'] and coordinates in obsm['spatial'].")
     inputs.add_argument("--gene-set", required=True, metavar="PATH",
-                        help="Gene-set CSV/TSV with a gene column and optional program and weight columns; existing parsing is preserved.")
+                        help="Gene-set CSV/TSV with a gene column and optional program and weight columns.")
     inputs.add_argument("--outdir", default="result", metavar="DIR",
-                        help="Result root containing rep/ and map/; an existing rep/adata_rep.h5ad is reused.")
+                        help="Output directory; reuse rep/adata_rep.h5ad when present.")
     execution = parser.add_argument_group("Samples and execution")
     execution.add_argument("--mode", choices=("single", "multi"), default="single",
                            help="single: train REP independently for each sample; multi: shared PCA/Harmony and REP. MAP stays sample-local.")
     execution.add_argument("--sample-col", default="sample_id", metavar="COLUMN",
                            help="obs column identifying spatial samples; required in both modes. multi needs at least two samples.")
     execution.add_argument("--harmony-batch-col", default=None, metavar="COLUMN",
-                           help="obs column defining Harmony batches in multi mode; when omitted, use --sample-col. No effect in single mode.")
+                           help="obs column defining Harmony batches in multi mode; defaults to --sample-col.")
     execution.add_argument("--large-effect", action="store_true", default=False,
-                           help="Select the existing memory-efficient MAP path; keep the scientific calculations and a single MAP H5AD output.")
+                           help="Use memory-efficient MAP execution for large datasets.")
     model = parser.add_argument_group("Graph and module parameters")
     model.add_argument("--rep-graph-k", type=int, default=10, metavar="K",
-                       help="Positive base spatial KNN neighbor count before graph symmetrization; distinct from microdomain top-K.")
+                       help="Number of spatial KNN neighbors before graph symmetrization.")
     model.add_argument("--arm-refine-topk", type=int, default=14, metavar="K",
-                       help="Positive number of retained microdomain neighbors selected by the existing affinity; capped by available candidates.")
+                       help="Maximum number of neighbors retained per microdomain.")
     model.add_argument("--signed-mcap-rho-min", type=float, default=0.0, metavar="RHO",
                        help="Module-graph correlation threshold in [0,1]; also controls the negative-correlation threshold for positive/negative relations.")
     model.add_argument("--signed-mcap-module-overlap-jaccard", type=float, default=0.80, metavar="JACCARD",

@@ -203,10 +203,6 @@ PROGRAM_SUMMARY_COLUMNS = [
     "matched_null_status",
     "matched_null_available",
     "uses_full_gene_set_anchor",
-    "uses_truth_labels",
-    "uses_bulk_expression",
-    "uses_bulk_phenotype",
-    "uses_outcome_labels",
 ]
 
 
@@ -2137,11 +2133,7 @@ def run_single_map(
         gene_set_df = _read_gene_set_table(gene_set_path)
     normalized_gene_set = _prepare_gene_set_df(gene_set_df, warnings)
 
-    logger.info(
-        "[single_map]: large_effect=%s; redundant AnnData deep copy %s",
-        large_effect,
-        "disabled" if large_effect else "preserved",
-    )
+    logger.info("[single_map]: MAP started | large_effect=%s", large_effect)
     if large_effect:
         adata_map = adata
     else:
@@ -2410,10 +2402,6 @@ def run_single_map(
                 "n_samples_negative_projection_available": n_neg_available,
                 "n_samples_no_positive_active_module": int(len(sample_contexts) - n_pos_found),
                 **dict(anchor_metadata),
-                "uses_truth_labels": False,
-                "uses_bulk_expression": False,
-                "uses_bulk_phenotype": False,
-                "uses_outcome_labels": False,
             }
         )
 
@@ -2599,7 +2587,6 @@ def run_single_map(
     }
     adata_map.uns["single_map"] = _h5ad_safe_uns_value(summary)
     _save_json(summary, outdir / SUMMARY_JSON_FILENAME)
-    # The public runner writes the final AnnData once, after attaching run metadata.
     logger.info(
         "[single_map]: active-module bank projection finished -> positive_key=%s negative_key=%s contrast_key=%s n_programs=%d runtime=%.2fs",
         MAP_POSITIVE_KEY,

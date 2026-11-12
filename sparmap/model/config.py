@@ -73,7 +73,7 @@ class SpaRMAP_Config:
     map_single_z_max: float = 5.0
     map_single_perm_chunk_size: int = 20
 
-    # Shared runtime and cache controls.
+    # Runtime settings.
     is_file_exist_loading: bool = False
     save_path: Optional[Union[str, Path]] = None
     seed: int = 42

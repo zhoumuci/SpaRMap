@@ -7,7 +7,7 @@ from pathlib import Path
 
 try:
     import zy_log
-except ModuleNotFoundError as exc:  # Allow source inspection without optional runtime installs.
+except ModuleNotFoundError as exc:
     if exc.name != "zy_log":
         raise
     zy_log = None
