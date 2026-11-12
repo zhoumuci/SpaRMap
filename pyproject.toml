@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sparmap"
+version = "0.1.0"
+description = "Spatial representation learning and gene-set mapping for spatial transcriptomics"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "anndata",
+    "scanpy",
+    "scikit-learn",
+    "scikit-misc",
+    "torch==2.5.1",
+    "harmonypy",
+    "tqdm",
+    "zy_log>=0.3",
+]
+
+[project.scripts]
+sparmap = "sparmap.runner:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sparmap", "sparmap.*"]
