@@ -20,7 +20,11 @@ dedicated Anaconda environment for the tutorial.
 
 ### 1.1 PyPI
 
-PyPI installation instructions will be added with the package release.
+Install SpaRMap from PyPI:
+
+```bash
+python -m pip install sparmap-st "torch==2.5.1+cu124" --extra-index-url https://download.pytorch.org/whl/cu124
+```
 
 ### 1.2 GitHub
 
@@ -39,12 +43,12 @@ To install SpaRMap in a dedicated environment:
 ```bash
 conda create -n sparmap python=3.9 pip
 conda activate sparmap
-git clone https://github.com/zhoumuci/SpaRMap.git
-cd SpaRMap
-python -m pip install . "torch==2.5.1+cu124" --extra-index-url https://download.pytorch.org/whl/cu124
+python -m pip install sparmap-st "torch==2.5.1+cu124" --extra-index-url https://download.pytorch.org/whl/cu124
 ```
 
-Run the following Python code from the SpaRMap repository root.
+Run all Python examples from one working directory: use the repository root
+for a GitHub installation, or choose a directory for the tutorial data and
+results when installing from PyPI. Place the `data/` folder in that directory.
 
 ## 2. Import modules
 
@@ -70,7 +74,7 @@ Download `BRCA.h5ad` and `tcga_brca_unfavorable_gene_set.csv` from the
 and place both files in `data/BRCA/`:
 
 ```text
-SpaRMap/
+working_directory/
   data/
     BRCA/
       BRCA.h5ad

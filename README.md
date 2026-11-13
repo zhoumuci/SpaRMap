@@ -25,18 +25,26 @@ can be reused to map additional gene sets from the same samples.
 
 ## Installation
 
-SpaRMap requires **Python 3.9 or later**. The default installation below selects
-PyTorch 2.5.1 with CUDA 12.4 for NVIDIA GPUs, including the RTX 4090, on Windows
-or Linux. Use a CUDA 12.4-compatible NVIDIA driver.
+SpaRMap requires **Python 3.9 or later**. The default installation uses
+PyTorch 2.5.1 with CUDA 12.4.
 
-Clone this GitHub repository or download its source archive, then install from
-the repository root:
+### PyPI
 
 ```bash
+python -m pip install sparmap-st "torch==2.5.1+cu124" --extra-index-url https://download.pytorch.org/whl/cu124
+```
+
+### GitHub
+
+Clone the repository and install from its root directory:
+
+```bash
+git clone https://github.com/zhoumuci/SpaRMap.git
+cd SpaRMap
 python -m pip install . "torch==2.5.1+cu124" --extra-index-url https://download.pytorch.org/whl/cu124
 ```
 
-This command automatically installs the Python dependencies, including PyTorch,
+Both methods automatically install the Python dependencies, including PyTorch,
 listed in [pyproject.toml](pyproject.toml).
 
 Other builds are listed in the
@@ -76,8 +84,7 @@ Use `--mode multi` for shared REP across two or more samples, and
 
 ## Tutorial
 
-The [BRCA tutorial](docs/tutorial/tutorial.md) demonstrates data loading, SpaRMap
-analysis, result inspection and spatial visualization using a 399-gene set.
+See the [Tutorial](docs/tutorial/tutorial.md) for step-by-step instructions.
 
 ## System Requirements
 
@@ -90,11 +97,6 @@ analysis, result inspection and spatial visualization using a 399-gene set.
 - **Additional validation:** Linux, macOS and CUDA execution remain to be tested
   for this release.
 
-## Citation
-
-Manuscript citation details will be added when available.
-
 ## License
 
-**Pending:** the project license has not yet been specified, and a `LICENSE` file
-has yet to be added.
+SpaRMap is released under the [MIT License](LICENSE).
