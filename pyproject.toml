@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "sparmap-st"
 version = "1.0.1"
 description = "A Spatially Aware Framework for Gene-Set Activity Mapping"
-readme = "README.md"
+dynamic = ["readme"]
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.9"
