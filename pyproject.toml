@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sparmap-st"
-version = "1.0"
-description = " A Spatially Aware Framework for Gene-Set Activity Mapping"
+version = "1.0.1"
+description = "A Spatially Aware Framework for Gene-Set Activity Mapping"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -26,6 +26,11 @@ dependencies = [
 
 [project.scripts]
 sparmap = "sparmap.runner:main"
+
+[project.urls]
+Homepage = "https://github.com/zhoumuci/SpaRMap"
+Repository = "https://github.com/zhoumuci/SpaRMap"
+Documentation = "https://github.com/zhoumuci/SpaRMap/blob/main/docs/tutorial/tutorial.md"
 
 [tool.setuptools.packages.find]
 where = ["."]

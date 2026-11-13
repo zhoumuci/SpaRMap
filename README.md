@@ -1,6 +1,6 @@
 # SpaRMap
 
-SpaRMap maps predefined gene set activity across spatial locations in spatial
+[SpaRMap](https://github.com/zhoumuci/SpaRMap) maps predefined gene set activity across spatial locations in spatial
 transcriptomics data. It takes gene expression counts, spatial coordinates and
 gene sets as input, and combines weighted spatial microdomains with background
 calibration to estimate spatial activity scores and identify co-enriched gene
@@ -21,7 +21,7 @@ SpaRMap consists of two stages:
 REP is independent of the input gene sets, so its representations and microdomains
 can be reused to map additional gene sets from the same samples.
 
-![SpaRMap workflow](docs/assets/case1.svg)
+![SpaRMap workflow](https://raw.githubusercontent.com/zhoumuci/SpaRMap/main/docs/assets/case1.svg)
 
 ## Installation
 
@@ -45,7 +45,7 @@ python -m pip install . "torch==2.5.1+cu124" --extra-index-url https://download.
 ```
 
 Both methods automatically install the Python dependencies, including PyTorch,
-listed in [pyproject.toml](pyproject.toml).
+listed in [pyproject.toml](https://github.com/zhoumuci/SpaRMap/blob/main/pyproject.toml).
 
 Other builds are listed in the
 [official PyTorch installation instructions](https://pytorch.org/get-started/previous-versions/#v251).
@@ -84,7 +84,7 @@ Use `--mode multi` for shared REP across two or more samples, and
 
 ## Tutorial
 
-See the [Tutorial](docs/tutorial/tutorial.md) for step-by-step instructions.
+See the [Tutorial](https://github.com/zhoumuci/SpaRMap/blob/main/docs/tutorial/tutorial.md) for step-by-step instructions.
 
 ## System Requirements
 
@@ -99,4 +99,4 @@ See the [Tutorial](docs/tutorial/tutorial.md) for step-by-step instructions.
 
 ## License
 
-SpaRMap is released under the [MIT License](LICENSE).
+SpaRMap is released under the [MIT License](https://github.com/zhoumuci/SpaRMap/blob/main/LICENSE).
